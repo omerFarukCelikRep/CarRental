@@ -7,23 +7,30 @@ using System.Text;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryProductDal : IProductDal
+    public class InMemoryCarDal : ICarDal
     {
         List<Car> _cars;
-        public InMemoryProductDal()
+        public InMemoryCarDal()
         {
             _cars = new List<Car>
             {
-                new Car { ID = 1, BrandID = 1, ColorID = 1, ModelYear = 2020, DailyPrice = 80, Description = "Az Yakar Çok Kaçar" },
-                new Car { ID = 2, BrandID = 2, ColorID = 1, ModelYear = 2020, DailyPrice = 80, Description = "Az Yakar Çok Kaçar" },
-                new Car { ID = 3, BrandID = 2, ColorID = 1, ModelYear = 2020, DailyPrice = 80, Description = "Az Yakar Çok Kaçar" },
-                new Car { ID = 4, BrandID = 3, ColorID = 1, ModelYear = 2020, DailyPrice = 80, Description = "Az Yakar Çok Kaçar" },
-                new Car { ID = 5, BrandID = 3, ColorID = 1, ModelYear = 2020, DailyPrice = 80, Description = "Az Yakar Çok Kaçar" },
+                new Car { ID = 1, BrandID = 1, ColorID = 1, ModelYear = 2020, DailyPrice = 70, Description = "Az Yakar Çok Kaçar" },
+                new Car { ID = 2, BrandID = 2, ColorID = 1, ModelYear = 2021, DailyPrice = 80, Description = "Az Yakar Çok Kaçar" },
+                new Car { ID = 3, BrandID = 2, ColorID = 1, ModelYear = 2020, DailyPrice = 90, Description = "Az Yakar Çok Kaçar" },
+                new Car { ID = 4, BrandID = 3, ColorID = 1, ModelYear = 2021, DailyPrice = 95, Description = "Az Yakar Çok Kaçar" },
+                new Car { ID = 5, BrandID = 3, ColorID = 1, ModelYear = 2020, DailyPrice = 120, Description = "Az Yakar Çok Kaçar" },
             };
         }
         public void Add(Car car)
         {
-            _cars.Add(car);
+            if (!_cars.Any(c => c.ID == car.ID))
+            {
+                _cars.Add(car); 
+            }
+            else
+            {
+                throw new Exception("Car is already exist");
+            }
         }
 
         public void Delete(Car car)
