@@ -35,8 +35,15 @@ namespace DataAccess.Concrete.InMemory
 
         public void Delete(Car car)
         {
-            Car carToDelete = _cars.FirstOrDefault(c => c.ID == car.ID);
-            _cars.Remove(carToDelete);
+            if (!_cars.Any(c => c.ID == car.ID))
+            {
+                Car carToDelete = _cars.FirstOrDefault(c => c.ID == car.ID);
+                _cars.Remove(carToDelete); 
+            }
+            else
+            {
+                throw new Exception("Car isn't exist");
+            }
         }
 
         public List<Car> GetAll()
@@ -51,12 +58,19 @@ namespace DataAccess.Concrete.InMemory
 
         public void Update(Car car)
         {
-            Car carToUpdate = _cars.FirstOrDefault(c => c.ID == car.ID);
-            carToUpdate.BrandID = car.BrandID;
-            carToUpdate.ColorID = car.ColorID;
-            carToUpdate.ModelYear = car.ModelYear;
-            carToUpdate.DailyPrice = car.DailyPrice;
-            carToUpdate.Description = car.Description;
+            if (!_cars.Any(c => c.ID == car.ID))
+            {
+                Car carToUpdate = _cars.FirstOrDefault(c => c.ID == car.ID);
+                carToUpdate.BrandID = car.BrandID;
+                carToUpdate.ColorID = car.ColorID;
+                carToUpdate.ModelYear = car.ModelYear;
+                carToUpdate.DailyPrice = car.DailyPrice;
+                carToUpdate.Description = car.Description; 
+            }
+            else
+            {
+                throw new Exception("Car isn't exist");
+            }
         }
     }
 }
