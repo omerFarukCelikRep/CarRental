@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface ICarDal
+    public interface ICarDal : IDal
     {
         List<Car> GetAll();
         void Add(Car car);

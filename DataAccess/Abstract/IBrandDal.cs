@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccess.Abstract
 {
-    public interface IBrandDal
+    public interface IBrandDal : IDal
     {
         List<Brand> GetAll();
         void Add(Brand brand);
