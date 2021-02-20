@@ -1,7 +1,9 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -11,27 +13,55 @@ namespace DataAccess.Concrete.EntityFramework
     {
         public void Add(Brand entity)
         {
-            throw new NotImplementedException();
+            if (entity.BrandName.Length > 2)
+            {
+                using (CarRentalContext context = new CarRentalContext())
+                {
+                    var addedBrand = context.Entry(entity);
+                    addedBrand.State = EntityState.Added;
+                    context.SaveChanges();
+                } 
+            }
+            else
+            {
+                throw new Exception("Brand name must be at least 2 character");
+            }
         }
 
         public void Delete(Brand entity)
         {
-            throw new NotImplementedException();
+            using (CarRentalContext context = new CarRentalContext())
+            {
+                var deletedBrand = context.Entry(entity);
+                deletedBrand.State = EntityState.Deleted;
+                context.SaveChanges();
+            }
         }
 
         public Brand Get(Expression<Func<Brand, bool>> filter)
         {
-            throw new NotImplementedException();
+            using (CarRentalContext context = new CarRentalContext())
+            {
+                return context.Set<Brand>().SingleOrDefault(filter);
+            }
         }
 
         public List<Brand> GetAll(Expression<Func<Brand, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            using (CarRentalContext context = new CarRentalContext())
+            {
+                return filter == null ? context.Set<Brand>().ToList() : context.Set<Brand>().Where(filter).ToList();
+            }
         }
 
         public void Update(Brand entity)
         {
-            throw new NotImplementedException();
+            using (CarRentalContext context = new CarRentalContext())
+            {
+                var updatedBrand = context.Entry(entity);
+                updatedBrand.State = EntityState.Modified;
+                context.SaveChanges();
+            }
         }
     }
 }
