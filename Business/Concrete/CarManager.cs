@@ -23,12 +23,12 @@ namespace Business.Concrete
 
         public List<Car> GetAllByBrandId(int brandId)
         {
-            throw new NotImplementedException();
+            return _carDal.GetAll(c => c.BrandID == brandId);
         }
 
         public List<Car> GetCarsByDailyPrice(decimal min, decimal max)
         {
-            throw new NotImplementedException();
+            return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice <= max);
         }
     }
 }
