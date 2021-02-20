@@ -18,10 +18,10 @@ namespace ConsoleUI
             var carList = carManager.GetAll().Join(brandManager.GetAll(),
                 cm => cm.BrandID,
                 bm => bm.BrandID,
-                (cm, bm) => new { cm.ID, bm.BrandName, cm.CarColorID, cm.ModelYear, cm.DailyPrice, cm.Description }).Join(carColorManager.GetAll(),
+                (cm, bm) => new { cm.CarID, bm.BrandName, cm.CarColorID, cm.ModelYear, cm.DailyPrice, cm.Description }).Join(carColorManager.GetAll(),
                 cl => cl.CarColorID,
                 ccm => ccm.ColorID,
-                (cl, ccm) => new { cl.ID, cl.BrandName, ccm.ColorName, cl.ModelYear, cl.DailyPrice, cl.Description });
+                (cl, ccm) => new { cl.CarID, cl.BrandName, ccm.ColorName, cl.ModelYear, cl.DailyPrice, cl.Description });
 
             //foreach (Car car in carManager.GetAll())
             //{
@@ -32,7 +32,7 @@ namespace ConsoleUI
 
             foreach (var car in carList)
             {
-                Console.WriteLine($"{car.ID} {car.BrandName} {car.ColorName} {car.ModelYear} {car.DailyPrice} {car.Description}");
+                Console.WriteLine($"{car.CarID} {car.BrandName} {car.ColorName} {car.ModelYear} {car.DailyPrice} {car.Description}");
             }
         }
     }

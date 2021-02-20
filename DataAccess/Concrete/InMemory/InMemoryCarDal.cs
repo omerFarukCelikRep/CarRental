@@ -14,16 +14,16 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car { ID = 1, BrandID = 1, CarColorID = 1, ModelYear = 2020, DailyPrice = 70, Description = "Az Yakar Çok Kaçar" },
-                new Car { ID = 2, BrandID = 2, CarColorID = 2, ModelYear = 2021, DailyPrice = 80, Description = "Az Yakar Çok Kaçar" },
-                new Car { ID = 3, BrandID = 2, CarColorID = 1, ModelYear = 2020, DailyPrice = 90, Description = "Az Yakar Çok Kaçar" },
-                new Car { ID = 4, BrandID = 3, CarColorID = 2, ModelYear = 2021, DailyPrice = 95, Description = "Az Yakar Çok Kaçar" },
-                new Car { ID = 5, BrandID = 3, CarColorID = 1, ModelYear = 2020, DailyPrice = 120, Description = "Az Yakar Çok Kaçar" },
+                new Car { CarID = 1, BrandID = 1, CarColorID = 1, ModelYear = 2020, DailyPrice = 70, Description = "Az Yakar Çok Kaçar" },
+                new Car { CarID = 2, BrandID = 2, CarColorID = 2, ModelYear = 2021, DailyPrice = 80, Description = "Az Yakar Çok Kaçar" },
+                new Car { CarID = 3, BrandID = 2, CarColorID = 1, ModelYear = 2020, DailyPrice = 90, Description = "Az Yakar Çok Kaçar" },
+                new Car { CarID = 4, BrandID = 3, CarColorID = 2, ModelYear = 2021, DailyPrice = 95, Description = "Az Yakar Çok Kaçar" },
+                new Car { CarID = 5, BrandID = 3, CarColorID = 1, ModelYear = 2020, DailyPrice = 120, Description = "Az Yakar Çok Kaçar" },
             };
         }
         public void Add(Car car)
         {
-            if (!_cars.Any(c => c.ID == car.ID))
+            if (!_cars.Any(c => c.CarID == car.CarID))
             {
                 _cars.Add(car); 
             }
@@ -35,9 +35,9 @@ namespace DataAccess.Concrete.InMemory
 
         public void Delete(Car car)
         {
-            if (!_cars.Any(c => c.ID == car.ID))
+            if (!_cars.Any(c => c.CarID == car.CarID))
             {
-                Car carToDelete = _cars.FirstOrDefault(c => c.ID == car.ID);
+                Car carToDelete = _cars.FirstOrDefault(c => c.CarID == car.CarID);
                 _cars.Remove(carToDelete); 
             }
             else
@@ -58,9 +58,9 @@ namespace DataAccess.Concrete.InMemory
 
         public void Update(Car car)
         {
-            if (!_cars.Any(c => c.ID == car.ID))
+            if (!_cars.Any(c => c.CarID == car.CarID))
             {
-                Car carToUpdate = _cars.FirstOrDefault(c => c.ID == car.ID);
+                Car carToUpdate = _cars.FirstOrDefault(c => c.CarID == car.CarID);
                 carToUpdate.BrandID = car.BrandID;
                 carToUpdate.CarColorID = car.CarColorID;
                 carToUpdate.ModelYear = car.ModelYear;
