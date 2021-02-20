@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
@@ -11,28 +12,47 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            BrandManager brandManager = new BrandManager(new InMemoryBrandDal());
-            CarColorManager carColorManager = new CarColorManager(new InMemoryCarColorDal());
-            CarManager carManager = new CarManager(new InMemoryCarDal());
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            CarColorManager carColorManager = new CarColorManager(new EfCarColorDal());
+            CarManager carManager = new CarManager(new EfCarDal());
+
+            EfCarDal efCarDal = new EfCarDal();
+            efCarDal.Add(new Car
+            {
+                BrandID = 3,
+                CarColorID = 1,
+                ModelYear = 2021,
+                DailyPrice = 80,
+                Description = "Çok Yakar"
+            });
 
             var carList = carManager.GetAll().Join(brandManager.GetAll(),
                 cm => cm.BrandID,
                 bm => bm.BrandID,
-                (cm, bm) => new { cm.CarID, bm.BrandName, cm.CarColorID, cm.ModelYear, cm.DailyPrice, cm.Description }).Join(carColorManager.GetAll(),
+                (cm, bm) => new
+                {
+                    cm.CarID,
+                    bm.BrandName,
+                    cm.CarColorID,
+                    cm.ModelYear,
+                    cm.DailyPrice,
+                    cm.Description
+                }).Join(carColorManager.GetAll(),
                 cl => cl.CarColorID,
-                ccm => ccm.ColorID,
-                (cl, ccm) => new { cl.CarID, cl.BrandName, ccm.ColorName, cl.ModelYear, cl.DailyPrice, cl.Description });
-
-            //foreach (Car car in carManager.GetAll())
-            //{
-            //    string brand = brandManager.GetAll().Single(b => b.BrandID == car.BrandID).BrandName;
-            //    string carColor = carColorManager.GetAll().Single(cc => cc.ColorID == car.CarColorID).ColorName;
-            //    Console.WriteLine(car.ID + " " + brand + " " + carColor + " " + car.ModelYear + " " + car.DailyPrice + " " + car.Description);
-            //}
+                cc => cc.CarColorID,
+                (cl, cc) => new
+                {
+                    cl.CarID,
+                    cl.BrandName,
+                    cc.CarColorName,
+                    cl.ModelYear,
+                    cl.DailyPrice,
+                    cl.Description
+                }).ToList();
 
             foreach (var car in carList)
             {
-                Console.WriteLine($"{car.CarID} {car.BrandName} {car.ColorName} {car.ModelYear} {car.DailyPrice} {car.Description}");
+                Console.WriteLine($"{car.CarID} {car.BrandName} {car.CarColorName} {car.ModelYear} {car.DailyPrice} {car.Description}");
             }
         }
     }
