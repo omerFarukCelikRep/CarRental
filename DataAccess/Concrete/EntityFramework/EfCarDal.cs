@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,38 @@ namespace DataAccess.Concrete.EntityFramework
             using (CarRentalContext context = new CarRentalContext())
             {
                 return filter == null ? context.Set<Car>().ToList() : context.Set<Car>().Where(filter).ToList();
+            }
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            using (CarRentalContext context = new CarRentalContext())
+            {
+                var result = context.Cars.Join(context.Brands,
+                    c => c.BrandID,
+                    b => b.BrandID,
+                    (c, b) => new
+                    {
+                        CarID = c.CarID,
+                        BrandName = b.BrandName,
+                        CarColorID = c.CarColorID,
+                        ModelYear = c.ModelYear,
+                        DailyPrice = c.DailyPrice,
+                        Description = c.Description
+                    }).Join(context.CarColors,
+                    cb => cb.CarColorID,
+                    cc => cc.CarColorID,
+                    (cb,cc) => new CarDetailDto
+                    {
+                        CarID = cb.CarID,
+                        BrandName = cb.BrandName,
+                        CarColorName = cc.CarColorName,
+                        ModelYear = cb.ModelYear,
+                        DailyPrice = cb.DailyPrice,
+                        Description = cb.Description
+                    });
+
+                return result.ToList();
             }
         }
 
