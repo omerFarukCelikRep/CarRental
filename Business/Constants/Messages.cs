@@ -37,5 +37,30 @@ namespace Business.Constants
         public static string CarsListedByDailyPrice = "Cars Listed By Daily Price";
 
         public static string CarUpdated = "Car Updated";
+
+        public static string UserAdded = "User Added";
+
+        public static string UserDeleted = "User Deleted";
+
+        public static string UserUpdated = "User Updated";
+
+        public static string UserListed = "User Listed";
+
+        public static string CustomerAdded = "Customer Added";
+
+        public static string CustomerDeleted = "Customer Deleted";
+
+        public static string CustomersListed = "Customer Listed";
+
+        public static string CustomerUpdated = "Customer Updated";
+
+        public static string RentalAdded = "Rental Added";
+
+        public static string RentalDeleted = "Rental Deleted";
+
+        public static string RentalsListed = "Rental Listed";
+
+        public static string RentalUpdated = "Rental Updated";
+
     }
 }
