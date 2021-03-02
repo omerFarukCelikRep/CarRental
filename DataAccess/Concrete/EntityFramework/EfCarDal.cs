@@ -43,7 +43,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (CarRentalContext context = new CarRentalContext())
             {
-                return context.Set<Car>().SingleOrDefault();
+                return context.Set<Car>().SingleOrDefault(filter);
             }
         }
 
